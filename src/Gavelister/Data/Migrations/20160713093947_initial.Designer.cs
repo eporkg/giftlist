@@ -8,9 +8,10 @@ using Gavelister.Data;
 namespace Gavelister.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160713093947_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -70,11 +71,13 @@ namespace Gavelister.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AmountBought");
-
-                    b.Property<int>("AmountRequested");
-
                     b.Property<string>("Description");
+
+                    b.Property<int>("NumberBought");
+
+                    b.Property<int>("NumberRequested");
+
+                    b.Property<string>("Title");
 
                     b.Property<string>("Url");
 

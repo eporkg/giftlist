@@ -6,7 +6,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>4eb3bab2-9319-4c7f-8d1b-b37c7c9647ab</ProjectGuid>
+    <ProjectGuid>1fb8309c-787f-491b-be7a-2d4b46c8fb36</ProjectGuid>
     <RootNamespace>Gavelister</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>

@@ -126,16 +126,16 @@ namespace Gavelister.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LogOff()
-        {
-            await _signInManager.SignOutAsync();
-            _logger.LogInformation(4, "User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
-        }
+        ////
+        //// POST: /Account/LogOff
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> LogOff()
+        //{
+        //    await _signInManager.SignOutAsync();
+        //    _logger.LogInformation(4, "User logged out.");
+        //    return RedirectToAction();
+        //}
 
         //
         // POST: /Account/ExternalLogin
@@ -453,14 +453,7 @@ namespace Gavelister.Controllers
 
         private IActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
+            return Redirect(returnUrl);
         }
 
         #endregion

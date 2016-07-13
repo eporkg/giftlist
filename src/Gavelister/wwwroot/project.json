@@ -1,6 +1,4 @@
 ﻿{
-  "userSecretsId": "aspnet-Gavelister-f68f8224-8bcb-46af-b699-58c0d74730ee",
-
   "dependencies": {
     "Microsoft.NETCore.App": {
       "version": "1.0.0",
