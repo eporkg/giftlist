@@ -38,7 +38,16 @@
         </div>
 
         <div class="row show-if-mobile">
-            <div><a href="@item.Url" target="_blank">@item.Description</a></div>
+            <div>
+                @if (string.IsNullOrEmpty(item.Url))
+                {
+                    @Html.DisplayFor(modelItem => @item.Description);
+                }
+                else
+                {
+                    <a href="@item.Url" class="description-url" target="_blank">@item.Description</a>
+                }
+            </div>
             <div class="row">
                 <div class="col-xs-7">
                     <div><span><strong>Ønsket: </strong></span>@Html.DisplayFor(modelItem => item.AmountRequested)</div>
