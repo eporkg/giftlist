@@ -14,7 +14,9 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>
+                        <a href="@item.Url" target="_blank">@item.Description</a>
+                   </td>
                     <td>@Html.DisplayFor(modelItem => item.AmountRequested)</td>
                     <td>@Html.DisplayFor(modelItem => item.AmountBought)</td>
                     <td>@Html.DisplayFor(modelItem => item.NumberLeft)</td>
@@ -25,7 +27,7 @@
                         <input type='button' value='+' class='qtyplus' max-number="@item.NumberLeft" field='@amountReservedId' />
                     </td>
                     <td>
-                        <a class="btn btn-default buy-button" disabled="@(item.AmountBought >= item.AmountRequested ? "true" : "false")">Kjøp</a>
+                        <a class="btn btn-default buy-button" @(item.AmountBought >= item.AmountRequested ? "disabled" : "")>Kjøp</a>
                         @*<input type='submit' formaction='@Url.Action("Buy", "Gifts")' />*@
                     </td>
                 </tr>
