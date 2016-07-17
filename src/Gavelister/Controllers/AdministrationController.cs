@@ -87,7 +87,7 @@ namespace Gavelister.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AmountBought,AmountRequested,Description,Url")] Gift gift)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AmountRequested,Description,Url")] Gift gift)
         {
             if (id != gift.Id)
             {

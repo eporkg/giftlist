@@ -58,3 +58,27 @@ textarea {
 }
 input.qtyplus { width:25px; height:25px;}
 input.qtyminus { width:25px; height:25px;}
+
+
+#gift-table {
+    table-layout: fixed;
+    width: 100%;
+    white-space: nowrap;
+    word-wrap: break-word;
+    table-layout: fixed;
+}
+
+#gift-table td {
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+
+#gift-table th {
+    border:none;
+}
+
+#gift-table th:nth-child(1), #gift-table td:nth-child(1) { width: 40%; } 
+#gift-table th:nth-child(2), #gift-table td:nth-child(2) { width: 40%;} 
+#gift-table th:nth-child(3), #gift-table td:nth-child(3) { width: 5%; } 
+#gift-table th:nth-child(4), #gift-table td:nth-child(4) { width: 15%; } 

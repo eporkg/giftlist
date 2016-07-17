@@ -27,7 +27,7 @@
                         <input type='button' value='+' class='qtyplus' max-number="@item.NumberLeft" field='@amountReservedId' />
                     </td>
                     <td>
-                        <a class="btn btn-default buy-button" @(item.AmountBought >= item.AmountRequested ? "disabled" : "")>Kjøp</a>
+                        <a class="btn btn-default buy-button" @(item.AmountBought >= item.AmountRequested ? "disabled" : "")>Registrer</a>
                         @*<input type='submit' formaction='@Url.Action("Buy", "Gifts")' />*@
                     </td>
                 </tr>
