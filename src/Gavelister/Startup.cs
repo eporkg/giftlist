@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Gavelister.Data;
 using Gavelister.Models;
-using Gavelister.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace Gavelister
 {
@@ -38,10 +38,16 @@ namespace Gavelister
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
+            services.AddIdentity<ApplicationUser, IdentityRole>(o => {
+                // configure identity options
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false; ;
+                o.Password.RequiredLength = 6;
+            })      
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
             services.AddMvc();
         }
 
@@ -67,13 +73,68 @@ namespace Gavelister
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-
+            SeedUsers(app);
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private async void SeedUsers(IApplicationBuilder app)
+        {
+            var userManager = app.ApplicationServices.GetService<UserManager<ApplicationUser>>();
+            var roleManager = app.ApplicationServices.GetService<RoleManager<IdentityRole>>();
+            // Add missing roles
+            var adminRole = await roleManager.FindByNameAsync("Administrator");
+            if (adminRole == null)
+            {
+                adminRole = new IdentityRole("Administrator");
+                await roleManager.CreateAsync(adminRole);
+            }
+
+            // Create test users
+            var admin = await userManager.FindByNameAsync("shervin");
+            if (admin == null)
+            {
+                admin = new ApplicationUser()
+                {
+                    UserName = "shervin",
+                };
+                await userManager.CreateAsync(admin, "JctZ6WPap8");
+                await userManager.AddToRoleAsync(admin, "Administrator");
+            }
+
+            // Add missing roles
+            var userRole = await roleManager.FindByNameAsync("User");
+            if (userRole == null)
+            {
+                userRole = new IdentityRole("User");
+                await roleManager.CreateAsync(userRole);
+            }
+            var user1 = await userManager.FindByNameAsync("eporkg");
+            if(user1 == null)
+            {
+                var newUser = new ApplicationUser()
+                {
+                    UserName = "eporkg",
+                };
+                await userManager.CreateAsync(newUser, "apehue");
+                await userManager.AddToRoleAsync(newUser, "User");
+            }
+
+            var user2 = await userManager.FindByNameAsync("bruker");
+            if (user2 == null)
+            {
+                var newUser = new ApplicationUser()
+                {
+                    UserName = "bruker",
+                };
+                await userManager.CreateAsync(newUser, "øyvind123");
+                await userManager.AddToRoleAsync(newUser, "User");
+            }
+
         }
     }
 }

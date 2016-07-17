@@ -7,16 +7,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Gavelister.Data;
 using Gavelister.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Gavelister.Controllers
 {
+    [Authorize(Roles = "User")]
     public class GiftsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
         public GiftsController(ApplicationDbContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
         // GET: Gifts
@@ -25,127 +27,19 @@ namespace Gavelister.Controllers
             return View(await _context.Gift.ToListAsync());
         }
 
-        // GET: Gifts/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Buy(int id, int amountReserved)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (amountReserved == 0)
+                return View();
 
             var gift = await _context.Gift.SingleOrDefaultAsync(m => m.Id == id);
-            if (gift == null)
-            {
-                return NotFound();
-            }
-
-            return View(gift);
-        }
-
-        // GET: Gifts/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Gifts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AmountBought,AmountRequested,Description,Url")] Gift gift)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(gift);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(gift);
-        }
-
-        // GET: Gifts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var gift = await _context.Gift.SingleOrDefaultAsync(m => m.Id == id);
-            if (gift == null)
-            {
-                return NotFound();
-            }
-            return View(gift);
-        }
-
-        // POST: Gifts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AmountBought,AmountRequested,Description,Url")] Gift gift)
-        {
-            if (id != gift.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(gift);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!GiftExists(gift.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index");
-            }
-            return View(gift);
-        }
-
-        // GET: Gifts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var gift = await _context.Gift.SingleOrDefaultAsync(m => m.Id == id);
-            if (gift == null)
-            {
-                return NotFound();
-            }
-
-            return View(gift);
-        }
-
-        // POST: Gifts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var gift = await _context.Gift.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Gift.Remove(gift);
+            var originalAmount = gift.AmountBought;
+            var newAmount = originalAmount + amountReserved;
+            if (newAmount > gift.AmountRequested)
+                return BadRequest("Antallet overstiger ønsket antall");
+            gift.AmountBought += newAmount;
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        private bool GiftExists(int id)
-        {
-            return _context.Gift.Any(e => e.Id == id);
+            return View();
         }
     }
 }

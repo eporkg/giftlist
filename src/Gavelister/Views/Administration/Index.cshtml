@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Gavelister.Models.Gift>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row top-buffer">
+    <a asp-action="Create" class="btn btn-default" >Opprett ny</a>
+</div>
+<div class="row">
+<table class="table">
+    <thead>
+        <tr>
+            <th>Beskrivelse</th>
+            <th>Url</th>
+            <th>Antall</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Url)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountRequested)
+            </td>
+            <td>
+                <a asp-action="Delete"  class="btn btn-default" asp-route-id="@item.Id">Slett</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+</div>

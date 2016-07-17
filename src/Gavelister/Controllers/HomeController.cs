@@ -10,7 +10,10 @@ namespace Gavelister.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "Gifts");
+            if (User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Administration");
+            } else return RedirectToAction("Index", "Gifts");
         }
 
         public IActionResult Error()

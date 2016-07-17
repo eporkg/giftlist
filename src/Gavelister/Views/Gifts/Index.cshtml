@@ -1,49 +1,38 @@
-@model IEnumerable<Gavelister.Models.Gift>
+﻿@model IEnumerable<Gavelister.Models.Gift>
 
-@{
-    ViewData["Title"] = "Index";
-}
+    <table class="table">
+        <thead>
+            <tr class="list-header">
+                <th></th>
+                <th>ØNSKET</th>
+                <th>KJØPT</th>
+                <th>GJENSTÅR</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.AmountRequested)</td>
+                    <td>@Html.DisplayFor(modelItem => item.AmountBought)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NumberLeft)</td>
+                    <td>
+                        @{var amountReservedId = "amountReserved" + @item.Id;}
+                        <input type='button' value='-' class='qtyminus' max-number="@item.NumberLeft" field='@amountReservedId' />
+                        @Html.TextBoxFor(modelItem => item.AmountReserved, new { @id = @amountReservedId, @class = "qty" })
+                        <input type='button' value='+' class='qtyplus' max-number="@item.NumberLeft" field='@amountReservedId' />
+                    </td>
+                    <td>
+                        <a class="btn btn-default buy-button" disabled="@(item.AmountBought >= item.AmountRequested ? "true" : "false")">Kjøp</a>
+                        @*<input type='submit' formaction='@Url.Action("Buy", "Gifts")' />*@
+                    </td>
+                </tr>
 
-<p>
-    <a asp-action="Create">Opprett ny</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.AmountBought)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AmountRequested)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Url)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AmountBought)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AmountRequested)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Url)
-            </td>
-            <td>
-                <a asp-action="Delete" asp-route-id="@item.Id">Slett</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
