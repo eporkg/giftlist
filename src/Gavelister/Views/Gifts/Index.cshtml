@@ -15,7 +15,14 @@
         var amountReservedId = "amountReserved" + item.Id;
         <div class="row show-if-desktop">
             <div class="col-sm-6">
-                <a href="@item.Url" target="_blank">@item.Description</a>
+                @if (string.IsNullOrEmpty(item.Url))
+                {
+                    @Html.DisplayFor(modelItem => @item.Description);
+                }
+                else
+                {
+                    <a href="@item.Url" class="description-url" target="_blank">@item.Description</a>
+                }
             </div>
             <div class="col-sm-1">@Html.DisplayFor(modelItem => item.AmountRequested)</div>
             <div class="col-sm-1">@Html.DisplayFor(modelItem => item.AmountBought)</div>

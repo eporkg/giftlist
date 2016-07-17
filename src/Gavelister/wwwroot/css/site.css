@@ -83,8 +83,8 @@ input.qtyminus { width:25px; }
 #gift-table th:nth-child(4), #gift-table td:nth-child(4) { width: 15%; } 
 
 
-.resposive-table-header{
-    font-weight:bold;
+.description-url{
+    cursor: pointer;
 }
 hr{
     margin-top: 10px;
