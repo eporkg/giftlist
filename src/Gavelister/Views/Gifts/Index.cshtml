@@ -1,40 +1,60 @@
 ﻿@model IEnumerable<Gavelister.Models.Gift>
 
-    <table class="table">
-        <thead>
-            <tr class="list-header">
-                <th></th>
-                <th>ØNSKET</th>
-                <th>KJØPT</th>
-                <th>GJENSTÅR</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        <a href="@item.Url" target="_blank">@item.Description</a>
-                   </td>
-                    <td>@Html.DisplayFor(modelItem => item.AmountRequested)</td>
-                    <td>@Html.DisplayFor(modelItem => item.AmountBought)</td>
-                    <td>@Html.DisplayFor(modelItem => item.NumberLeft)</td>
-                    <td>
-                        @{var amountReservedId = "amountReserved" + @item.Id;}
+    <div class="row show-if-desktop top-buffer">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-1"><strong>ØNSKET</strong></div>
+        <div class="col-sm-1"><strong>KJØPT</strong></div>
+        <div class="col-sm-1"><strong>GJENSTÅR</strong></div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-1"></div>
+    </div>
+<hr>
+    <div></div>
+    @foreach (var item in Model)
+    {
+        var amountReservedId = "amountReserved" + item.Id;
+        <div class="row show-if-desktop">
+            <div class="col-sm-6">
+                <a href="@item.Url" target="_blank">@item.Description</a>
+            </div>
+            <div class="col-sm-1">@Html.DisplayFor(modelItem => item.AmountRequested)</div>
+            <div class="col-sm-1">@Html.DisplayFor(modelItem => item.AmountBought)</div>
+            <div class="col-sm-1">@Html.DisplayFor(modelItem => item.NumberLeft)</div>
+            <div class="col-sm-2">
+                <input type='button' value='-' class='qtyminus' max-number="@item.NumberLeft" field='@amountReservedId' />
+                @Html.TextBoxFor(modelItem => item.AmountReserved, new { @class = "qty " + @amountReservedId })
+                <input type='button' value='+' class='qtyplus' max-number="@item.NumberLeft" field='@amountReservedId' />
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-default buy-button" gift-id="@item.Id" amount-reserved="@item.AmountReserved" @(item.AmountBought >= item.AmountRequested ? "disabled" : "")>Registrer</a>
+            </div>
+        </div>
+
+        <div class="row show-if-mobile">
+            <div><a href="@item.Url" target="_blank">@item.Description</a></div>
+            <div class="row">
+                <div class="col-xs-7">
+                    <div><span><strong>Ønsket: </strong></span>@Html.DisplayFor(modelItem => item.AmountRequested)</div>
+                    <div><span><strong>Kjøpt: </strong></span>@Html.DisplayFor(modelItem => item.AmountBought)</div>
+                    <div><span><strong>Gjenstår: </strong></span>@Html.DisplayFor(modelItem => item.NumberLeft)</div>
+                    <div>
+                        <span><strong>Antall: </strong></span>
                         <input type='button' value='-' class='qtyminus' max-number="@item.NumberLeft" field='@amountReservedId' />
                         @Html.TextBoxFor(modelItem => item.AmountReserved, new { @id = @amountReservedId, @class = "qty" })
                         <input type='button' value='+' class='qtyplus' max-number="@item.NumberLeft" field='@amountReservedId' />
-                    </td>
-                    <td>
-                        <a class="btn btn-default buy-button" @(item.AmountBought >= item.AmountRequested ? "disabled" : "")>Registrer</a>
-                        @*<input type='submit' formaction='@Url.Action("Buy", "Gifts")' />*@
-                    </td>
-                </tr>
+                    </div>
 
-            }
-        </tbody>
-    </table>
+                </div>
+                <div class="col-xs-5">
+                    <a class="btn btn-default buy-button" @(item.AmountBought >= item.AmountRequested ? "disabled" : "")>Registrer</a>
+                </div>
+            </div>
+            
+        </div>
+        <hr>
+ }
+
+
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }

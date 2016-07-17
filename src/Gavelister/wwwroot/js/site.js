@@ -1,8 +1,13 @@
 ﻿jQuery(document).ready(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        $(".show-if-desktop").remove();
+    } else $(".show-if-mobile").remove();
+
     $('.buy-button').on("click", function () {
-        var amountReserved = $("#amountReserved").val();
-        $.post("gifts/buy/?id=3&amountReserved=" + amountReserved, function (data) {
-            $(".result").html(data);
+        var giftId = $(this).attr('gift-id');
+        var amountReserved = $(this).attr('amount-reserved');
+
+        $.post("gifts/buy/?id=" + giftId + "&amountReserved=" + amountReserved, function (data) {       
         });
     });
     
