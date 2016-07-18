@@ -3,11 +3,13 @@
         $(".show-if-desktop").remove();
     } else $(".show-if-mobile").remove();
 
-    $('.buy-button').on("click", function () {
+    $('.buy-button').on("click", function (e) {
+        e.preventDefault();
         var giftId = $(this).attr('gift-id');
-        var amountReserved = $(this).attr('amount-reserved');
-
-        $.post("gifts/buy/?id=" + giftId + "&amountReserved=" + amountReserved, function (data) {       
+        var fieldId = $(this).attr('field');
+        var amountReserved = parseInt($('#' + fieldId).val());
+        $.post("gifts/buy/?id=" + giftId + "&amountReserved=" + amountReserved, function (data) {
+            window.location.reload();
         });
     });
     

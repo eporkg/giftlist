@@ -39,7 +39,8 @@ namespace Gavelister.Controllers
                 return BadRequest("Antallet overstiger ønsket antall");
             gift.AmountBought += newAmount;
             await _context.SaveChangesAsync();
-            return View();
+
+            return Ok();
         }
     }
 }

@@ -29,11 +29,11 @@
             <div class="col-sm-1">@Html.DisplayFor(modelItem => item.NumberLeft)</div>
             <div class="col-sm-2">
                 <input type='button' value='-' class='qtyminus' max-number="@item.NumberLeft" field='@amountReservedId' />
-                @Html.TextBoxFor(modelItem => item.AmountReserved, new { @class = "qty " + @amountReservedId })
+                @Html.TextBoxFor(modelItem => item.AmountReserved, new { @id = @amountReservedId, @class = "qty "  })
                 <input type='button' value='+' class='qtyplus' max-number="@item.NumberLeft" field='@amountReservedId' />
             </div>
             <div class="col-sm-1">
-                <a class="btn btn-default buy-button" gift-id="@item.Id" amount-reserved="@item.AmountReserved" @(item.AmountBought >= item.AmountRequested ? "disabled" : "")>Registrer</a>
+                <a class="btn btn-default buy-button" gift-id="@item.Id" field='@amountReservedId' @(item.AmountBought >= item.AmountRequested ? "disabled" : "")>Registrer</a>
             </div>
         </div>
 
