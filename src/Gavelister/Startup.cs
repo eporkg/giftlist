@@ -113,12 +113,12 @@ namespace Gavelister
                 userRole = new IdentityRole("User");
                 await roleManager.CreateAsync(userRole);
             }
-            var user1 = await userManager.FindByNameAsync("espenoghelene");
+            var user1 = await userManager.FindByNameAsync("gjest");
             if(user1 == null)
             {
                 var newUser = new ApplicationUser()
                 {
-                    UserName = "espenoghelene",
+                    UserName = "gjest",
                 };
                 await userManager.CreateAsync(newUser, "roklubben");
                 await userManager.AddToRoleAsync(newUser, "User");

@@ -246,3 +246,4 @@ ModelManifest.xml
 
 #appsettings
 appsettings.json
+Startup.cs
