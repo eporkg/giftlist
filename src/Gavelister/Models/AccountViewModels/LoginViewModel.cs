@@ -8,10 +8,10 @@ namespace Gavelister.Models.AccountViewModels
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Vennligst fyll inn brukernavn")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Vennligst fyll inn passord")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
