@@ -1,6 +1,8 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+       font-family: "Georgia";
+
 }
 
 /* Wrapping element */
@@ -89,4 +91,36 @@ input.qtyminus { width:25px; }
 hr{
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+#header-container{
+    border: 1px solid black; 
+    line-height: 1.25;
+    text-align: center;
+}
+#header-title{
+    font-family: 'Amatic SC';
+    font-size: 3.5em;
+    color: #4d4d4d;
+}
+
+#header-subtitle {
+    font-family: "Amatic SC";
+    font-size: 2.5em;
+    color: #4d4d4d;
+    
+}
+#header-datetime{
+    font-family: "Georgia";
+    font-size: 2.5em;
+    color: #f79646;
+}
+
+#btn-logoff{
+   font-size: 16px;
+   color: grey;
+   text-decoration: none;
+}
+.mobile-span{
+    padding:3px;
 }

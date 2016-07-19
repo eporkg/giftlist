@@ -37,7 +37,7 @@ namespace Gavelister.Controllers
             var newAmount = originalAmount + amountReserved;
             if (newAmount > gift.AmountRequested)
                 return BadRequest("Antallet overstiger ønsket antall");
-            gift.AmountBought += newAmount;
+            gift.AmountBought = newAmount;
             await _context.SaveChangesAsync();
 
             return Ok();
