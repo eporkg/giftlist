@@ -14,6 +14,8 @@ namespace Gavelister.Models
         public string Description { get; set; }
 
         public string Url { get; set; }
+        public int SortOrder { get; set; }
+
         [NotMapped]
         public int NumberLeft { get { return AmountRequested - AmountBought; } }
         [NotMapped]

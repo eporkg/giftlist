@@ -24,7 +24,9 @@ namespace Gavelister.Controllers
         // GET: Gifts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Gift.ToListAsync());
+            var gifts = await _context.Gift.ToListAsync();
+            var sorted = gifts.OrderBy(x => x.SortOrder);
+            return View(sorted);
         }
 
         public async Task<IActionResult> Buy(int id, int amountReserved)

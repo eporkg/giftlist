@@ -31,6 +31,13 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="col-md-2 control-label">Rekkefølge</label>
+            <div class="col-md-10">
+                <input asp-for="SortOrder" class="form-control" />
+                <span asp-validation-for="SortOrder" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Endre" class="btn btn-default" />
             </div>

@@ -14,6 +14,7 @@
             <th>Beskrivelse</th>
             <th>Url</th>
             <th>Antall</th>
+            <th>Rekkefølge</th>
             <th></th>
         </tr>
     </thead>
@@ -30,10 +31,11 @@
                 @Html.DisplayFor(modelItem => item.AmountRequested)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.SortOrder)
+            </td>
+            <td>
                 <a asp-action="Edit" class="btn btn-default" asp-route-id="@item.Id">Endre</a>
-                
                 <a asp-action="Delete"  class="btn btn-default" asp-route-id="@item.Id">Slett</a>
-
             </td>
         </tr>
 }

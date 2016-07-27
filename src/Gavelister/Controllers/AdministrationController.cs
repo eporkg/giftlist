@@ -24,7 +24,9 @@ namespace Gavelister.Controllers
         // GET: Gifts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Gift.ToListAsync());
+            var gifts = await _context.Gift.ToListAsync();
+            var sorted = gifts.OrderBy(x => x.SortOrder);
+            return View(sorted);
         }
 
         // GET: Gifts/Details/5
@@ -55,7 +57,7 @@ namespace Gavelister.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AmountBought,AmountRequested,Description,Url")] Gift gift)
+        public async Task<IActionResult> Create([Bind("Id,AmountBought,AmountRequested,Description,Url,SortOrder")] Gift gift)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +89,7 @@ namespace Gavelister.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AmountRequested,Description,Url")] Gift gift)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AmountRequested,Description,Url,SortOrder")] Gift gift)
         {
             if (id != gift.Id)
             {
